@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Webb-ATM</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+
+	<div class="page-header">
+  		<h1>&nbsp&nbsp&nbspWelcome to your ATM <small>now at the webb</small></h1>
+	</div>
+	
+	<div class="well">
+		<form method="POST" action="ATM" class="navbar-form">
+			<div class="form-group">
+		    	<input type="text" name="card" class="form-control" placeholder="card holder"/>
+		    	<input type="text" name="bank" class="form-control" placeholder="bank"/>
+		    	<input type="password" name="pin" class="form-control" placeholder="pin"/>
+		    	<button type="submit" name="action" VALUE="login" >login <i class="fa fa-sign-out"></i></button>
+		    </div>
+		</form>
+	</div>
+	
+	<div class="well">
+		<div class="form-group">
+			<form method="GET" action="ATM" class="navbar-form">
+		    	<input type="text" name="bankid" class="form-control" placeholder="bank"/>
+		    	<button type="submit" name="action" VALUE="addbank" >add bank <i class="fa fa-university"></i></button>
+			</form>
+		</div>
+	</div>
+	
+	<div class="well">
+		<div class="form-group">
+			<form method="GET" action="ATM" class="navbar-form">
+				<input type="text" name="card" class="form-control" placeholder="card holder"/>
+		    	<input type="text" name="bank" class="form-control" placeholder="bank"/>
+		    	<input type="text" name="pin" class="form-control" placeholder="pin"/>
+		    	<button type="submit" name="action" VALUE="addcustomer" >add customer <i class="fa fa-user-plus"></i></button>
+			</form>
+		</div>
+	</div>
+	
+</body>
+</html>

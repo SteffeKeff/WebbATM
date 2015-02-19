@@ -2,6 +2,9 @@
     <wb-module deploy-name="Webb-ATM">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="json-simple-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/Steffe/Desktop/json-simple-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="Webb-ATM"/>
         <property name="java-output-path" value="/Webb-ATM/build/classes"/>
     </wb-module>

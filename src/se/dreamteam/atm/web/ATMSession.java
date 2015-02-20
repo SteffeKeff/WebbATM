@@ -23,18 +23,13 @@ import se.dreamteam.atm.service.ATMSessionImpl;
 public final class ATMSession extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	JSONObject jsonObject = null;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-
-	}
+	private static JSONObject jsonObject = null;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
-		ATMSessionImpl atmSession = (ATMSessionImpl) session.getAttribute(id);
+		final HttpSession session = request.getSession();
+		final String id = (String) session.getAttribute("id");
+		final ATMSessionImpl atmSession = (ATMSessionImpl) session.getAttribute(id);
 
 		final String pathInfo = request.getPathInfo();
 		final String[] pathSegements = pathInfo.split("/");
@@ -61,13 +56,16 @@ public final class ATMSession extends HttpServlet
 					getReceipt(request, response, atmSession);
 					return;
 				}
-			}else{
+			}
+			else
+			{
 				response.sendError(401, "not authenticated");
 			}
 		}
 		response.sendError(400, "bad request");
 	}
 
+	@SuppressWarnings("unchecked")
 	private void checkBalance(HttpServletRequest request, HttpServletResponse response, ATMSessionImpl atmSession) throws IOException
 	{
 		try
@@ -84,14 +82,14 @@ public final class ATMSession extends HttpServlet
 
 	private void deposit(HttpServletRequest request, HttpServletResponse response, ATMSessionImpl atmSession) throws IOException
 	{
-		setJsonObject(request,response);
-		atmSession.deposit(Integer.parseInt(getString("amount",response)));
+		setJsonObject(request, response);
+		atmSession.deposit(Integer.parseInt(getString("amount", response)));
 		response.getWriter().println(jsonObject);
 	}
 
 	private void withdraw(HttpServletRequest request, HttpServletResponse response, ATMSessionImpl atmSession) throws IOException
 	{
-		setJsonObject(request,response);
+		setJsonObject(request, response);
 		try
 		{
 			atmSession.withdrawAmount(Integer.parseInt(getString("amount", response)));
@@ -104,24 +102,26 @@ public final class ATMSession extends HttpServlet
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getReceipt(HttpServletRequest request, HttpServletResponse response, ATMSessionImpl atmSession) throws IOException
 	{
 		try
 		{
 			ATMReceipt receipt = atmSession.requestReceipt(atmSession.getTransactionId());
-			
+
 			JSONObject json = new JSONObject();
 			json.put("transactionId", receipt.getTransactionId());
 			json.put("date", receipt.getDate());
 			json.put("amount", receipt.getAmount());
 			response.getWriter().print(json);
-			
-		}catch (ATMException e)
+
+		}
+		catch (ATMException e)
 		{
 			response.sendError(400, e.getMessage());
 		}
 	}
-	
+
 	private void setJsonObject(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -134,14 +134,17 @@ public final class ATMSession extends HttpServlet
 		{
 			response.sendError(400, e.getMessage());
 		}
-	}	
-	
+	}
+
 	private String getString(String value, HttpServletResponse response) throws IOException
 	{
-		try{
+		try
+		{
 			return (String) jsonObject.get(value);
-		}catch(NullPointerException e){
-			response.sendError(400,"no amount...");
+		}
+		catch (NullPointerException e)
+		{
+			response.sendError(400, "no amount...");
 		}
 		return null;
 	}
